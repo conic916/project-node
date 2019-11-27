@@ -1,41 +1,22 @@
-var fs = require('fs');
-var formidable = require('formidable');
+// metoda createElement = tworzymy obiekt
+//tworzymy element dzieki klasie div, propsy {}= wlasciwosci danego el, dziecko el = to co ma byc wewnatrz '',
+var element = React.createElement('div', {}, 'Hello world!');
 
-exports.upload = function(request, response) {
-    console.log("Rozpoczynam obsługę żądania upload.");
-    var form = new formidable.IncomingForm();
-    form.parse(request, function(error, fields, files) {
-        fs.renameSync(files.upload.path, "natura.jpg");
-        response.writeHead(200, {"Content-Type": "text/html"});
-        response.write("received image:<br/>");
-        response.write("<img src='/show' />");
-        response.end();
-    });
-}
+// renderowanie w drzewie DOM jesli element jest gotowy
+//parametry renderowania : element reactu ktory tworzymy, i element dom do ktorego przypinamy dany element, czyli ID = app.
+ReactDOM.render(element, document.getElementById('app'));
 
-exports.welcome = function(request, response) {
-    console.log("Rozpoczynam obsługę żądania welcome.");
-    fs.readFile('templates/start.html', function(err, html) {
-        response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
-        response.write(html);
-        response.end();
-    });
-}
-
-exports.error = function(request, response) {
-    console.log("Nie wiem co robić.");
-    response.write("404 :(");
-    response.end();
-}
-
-
-exports.show = function (request, response) {
-    fs.readFile("natura.jpg", "binary", function (error, file) {
-        response.writeHead(200, {
-            "Content-Type": "image/png"
-        });
-        response.write(file, "binary");
-        response.end();
-    });
-}
-
+var element =
+    React.createElement('div', {},
+        React.createElement('h1', {}, 'Lista filmow'),
+        React.CreateElement('ul', {},
+            React.createElement('li', {},
+                React.createElement('h2', {}, 'Harry Potter'),
+                React.createElement('p', {}, 'film o czarodzieju')
+            ),
+            React.createElement('li', {},
+                React.createElement('h2', {}, 'Król Lew'),
+                React.createElement('p', {}, 'Film opowiadający historię króla sawanny')
+            )
+        )
+    );
